@@ -60,7 +60,7 @@ namespace CabInvoiceGeneratorNUnitTest
             }
             catch (Exception e)
             {
-                Assert.AreEqual(e.Message, "Rdes Are Null");
+                Assert.AreEqual(e.Message, "Rides Are Null");
             }
         }
     }
