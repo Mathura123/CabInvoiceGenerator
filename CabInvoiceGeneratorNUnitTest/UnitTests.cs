@@ -27,5 +27,18 @@ namespace CabInvoiceGeneratorNUnitTest
                 Assert.AreEqual(e.Message, "Invalid Distance");
             }
         }
+        [Test]
+        public void GivenInvalidTime_ShouldThrow_CabInvoiceException()
+        {
+            try
+            {
+                InvoiceGenerator invoiceGenetratorTestObj = new InvoiceGenerator();
+                double result = invoiceGenetratorTestObj.CalculateFare(2, -5);
+            }
+            catch (Exception e)
+            {
+                Assert.AreEqual(e.Message, "Invalid Time");
+            }
+        }
     }
 }
