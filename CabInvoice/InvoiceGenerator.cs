@@ -10,7 +10,6 @@ namespace CabInvoice
         private double calculatedFare = 0;
         public double CalculateFare(double distanceInKM, int timeInMin)
         {
-
             if (distanceInKM <= 0)
             {
                 throw new CabInvoiceException(CabInvoiceException.ExceptionType.INVALID_DISTANCE, "Invalid Distance");

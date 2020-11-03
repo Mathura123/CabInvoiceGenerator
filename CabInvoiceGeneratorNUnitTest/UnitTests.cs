@@ -1,5 +1,6 @@
 using NUnit.Framework;
 using CabInvoice;
+using System;
 
 namespace CabInvoiceGeneratorNUnitTest
 {
@@ -10,8 +11,21 @@ namespace CabInvoiceGeneratorNUnitTest
         {
             double expected = 25;
             InvoiceGenerator invoiceGenetratorTestObj = new InvoiceGenerator();
-            double result = invoiceGenetratorTestObj.CalculateFare(-2, 5);
+            double result = invoiceGenetratorTestObj.CalculateFare(2, 5);
             Assert.AreEqual(expected,result);
+        }
+        [Test]
+        public void GivenInvalidDistance_ShouldThrow_CabInvoiceException()
+        {
+            try
+            {
+                InvoiceGenerator invoiceGenetratorTestObj = new InvoiceGenerator();
+                double result = invoiceGenetratorTestObj.CalculateFare(-2, 5);
+            }
+            catch(Exception e)
+            {
+                Assert.AreEqual(e.Message, "Invalid Distance");
+            }
         }
     }
 }
