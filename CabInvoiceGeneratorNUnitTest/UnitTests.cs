@@ -6,11 +6,11 @@ namespace CabInvoiceGeneratorNUnitTest
     public class Tests
     {
         [Test]
-        public void GivenDistanceAndTimeShouldReturnTotalFare()
+        public void GivenDistanceAndTime_ShouldReturn_TotalFare()
         {
-            int expected = 25;
+            double expected = 25;
             InvoiceGenerator invoiceGenetratorTestObj = new InvoiceGenerator();
-            int result = invoiceGenetratorTestObj.CalculateFare(2, 5);
+            double result = invoiceGenetratorTestObj.CalculateFare(-2, 5);
             Assert.AreEqual(expected,result);
         }
     }

@@ -6,11 +6,21 @@ namespace CabInvoice
 {
     public class InvoiceGenerator
     {
-        public int CalculateFare(int distanceInKM, int timeInMin)
+        private readonly int minimumFare = 5;
+        private double calculatedFare = 0;
+        public double CalculateFare(double distanceInKM, int timeInMin)
         {
-            int cost = (10 * distanceInKM) + timeInMin;
-            int minimumFare = 5;
-            return Math.Max(cost, minimumFare);
+
+            if (distanceInKM <= 0)
+            {
+                throw new CabInvoiceException(CabInvoiceException.ExceptionType.INVALID_DISTANCE, "Invalid Distance");
+            }
+            if (timeInMin < 0)
+            {
+                throw new CabInvoiceException(CabInvoiceException.ExceptionType.INVALID_TIME, "Invalid Time");
+            }
+            calculatedFare = (10 * distanceInKM) + timeInMin;
+            return Math.Max(calculatedFare, minimumFare);
         }
     }
 }
