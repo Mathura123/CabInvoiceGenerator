@@ -21,7 +21,7 @@ namespace CabInvoice
             calculatedFare = (10 * distanceInKM) + timeInMin;
             return Math.Max(calculatedFare, minimumFare);
         }
-        public double CalculateFare(Ride[] rides)
+        public InvoiceSummary CalculateFare(Ride[] rides)
         {
             double totalFare = 0;
             if (rides == null)
@@ -32,7 +32,7 @@ namespace CabInvoice
             {
                 totalFare += this.CalculateFare(ride.distance,ride.time);
             }
-            return totalFare;
+            return new InvoiceSummary(rides.Length, totalFare);
         }
     }
 }
