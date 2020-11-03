@@ -8,7 +8,9 @@ namespace CabInvoice
     {
         public int CalculateFare(int distanceInKM, int timeInMin)
         {
-            return default(int);
+            int cost = (10 * distanceInKM) + timeInMin;
+            int minimumFare = 5;
+            return Math.Max(cost, minimumFare);
         }
     }
 }
