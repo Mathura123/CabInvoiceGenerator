@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace CabInvoice
+﻿namespace CabInvoice
 {
+    using System;
+
+    //Custom exception class
     class CabInvoiceException : Exception
     {
         public enum ExceptionType

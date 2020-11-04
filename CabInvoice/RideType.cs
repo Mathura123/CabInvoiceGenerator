@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace CabInvoice
+﻿namespace CabInvoice
 {
+    //Enum to give RideType
     public enum RideType
     {
         NORMAL,

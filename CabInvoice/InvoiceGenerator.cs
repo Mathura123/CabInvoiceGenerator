@@ -1,15 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace CabInvoice
+﻿namespace CabInvoice
 {
+    using System;
+
     public class InvoiceGenerator
     {
+        //Charges of the rides
         private static int CHARGE_PER_KM;
         private static int CHARGE_PER_MIN;
         private static int MINIMUM_FARE;
 
+        //Calculates the total fare for a particular ride
         public static double CalculateFare(double distanceInKM, int timeInMin, RideType rideType)
         {
             SetCharges(rideType);
@@ -25,6 +25,7 @@ namespace CabInvoice
             calculatedFare = (CHARGE_PER_KM * distanceInKM) + (CHARGE_PER_MIN * timeInMin);
             return Math.Max(calculatedFare, MINIMUM_FARE);
         }
+        //Generates Rides Invoice Summary
         public static InvoiceSummary CalculateFare(Ride[] rides)
         {
             double totalFare = 0;
@@ -38,6 +39,7 @@ namespace CabInvoice
             }
             return new InvoiceSummary(rides.Length, totalFare);
         }
+        //private method for setting the charges for a each type of ride 
         private static void SetCharges(RideType rideType)
         {
             if (rideType.Equals(RideType.NORMAL))

@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace CabInvoice
+﻿namespace CabInvoice
 {
+    using System;
+
+    //Class to Invoice SUmmary
     public class InvoiceSummary
     {
         private int numberOfRides;
@@ -16,6 +15,5 @@ namespace CabInvoice
             this.totalFare = totalFare;
             this.averageFare = this.totalFare / this.numberOfRides;
         }
-
     }
 }

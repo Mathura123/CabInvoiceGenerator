@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace CabInvoice
+﻿namespace CabInvoice
 {
+    //Class to store info about particular ride
     public class Ride
     {
         public double distance;
