@@ -1,5 +1,5 @@
-using NUnit.Framework;
 using CabInvoice;
+using NUnit.Framework;
 using System;
 
 namespace CabInvoiceGeneratorNUnitTest
@@ -66,7 +66,7 @@ namespace CabInvoiceGeneratorNUnitTest
                 RideRepository rideRepoTestObj = new RideRepository();
                 InvoiceSummary result = rideRepoTestObj.GetInvoice("user1");
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 Assert.AreEqual(e.Message, "Invalid UserID");
             }
@@ -81,5 +81,22 @@ namespace CabInvoiceGeneratorNUnitTest
             InvoiceSummary result = rideRepoTestObj.GetInvoice("user1");
             Assert.AreEqual(expected, result.totalFare);
         }
+        [Test]
+        public void GivenUserId_AndNullRides_RideRepository_ShouldThrow_CabInvoiceException()
+        {
+            try
+            {
+                double expected = 116;
+                Ride[] rides = null;
+                RideRepository rideRepoTestObj = new RideRepository();
+                rideRepoTestObj.AddRide("user1", rides);
+                InvoiceSummary result = rideRepoTestObj.GetInvoice("user1");
+                Assert.AreEqual(expected, result.totalFare);
+            }
+            catch(Exception e)
+            {
+                Assert.AreEqual(e.Message, "Rides Are Null");
+            }
+        }
+        }
     }
-}
