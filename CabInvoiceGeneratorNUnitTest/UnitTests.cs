@@ -10,7 +10,7 @@ namespace CabInvoiceGeneratorNUnitTest
         public void GivenDistanceAndTime_ShouldReturn_TotalFare()
         {
             double expected = 25;
-            double result = InvoiceGenerator.CalculateFare(2, 5);
+            double result = InvoiceGenerator.CalculateFare(2, 5, RideType.NORMAL);
             Assert.AreEqual(expected, result);
         }
         [Test]
@@ -18,7 +18,7 @@ namespace CabInvoiceGeneratorNUnitTest
         {
             try
             {
-                double result = InvoiceGenerator.CalculateFare(-2, 5);
+                double result = InvoiceGenerator.CalculateFare(-2, 5, RideType.NORMAL);
             }
             catch (Exception e)
             {
@@ -30,7 +30,7 @@ namespace CabInvoiceGeneratorNUnitTest
         {
             try
             {
-                double result = InvoiceGenerator.CalculateFare(2, -5);
+                double result = InvoiceGenerator.CalculateFare(2, -5, RideType.NORMAL);
             }
             catch (Exception e)
             {
@@ -40,8 +40,8 @@ namespace CabInvoiceGeneratorNUnitTest
         [Test]
         public void GivenMultipleRides_ShouldReturn_InvoiceSummary()
         {
-            double expected = 30.0;
-            Ride[] ridesTestObj = { new Ride(2.0, 5), new Ride(0.1, 1) };
+            double expected = 45.0;
+            Ride[] ridesTestObj = { new Ride(2.0, 5, RideType.NORMAL), new Ride(0.1, 1, RideType.PREMIUM) };
             InvoiceSummary result = InvoiceGenerator.CalculateFare(ridesTestObj);
             Assert.AreEqual(expected, result.totalFare);
         }
@@ -74,8 +74,8 @@ namespace CabInvoiceGeneratorNUnitTest
         [Test]
         public void GivenUserId_RideRepository_ShouldReturn_InvoiceSummary()
         {
-            double expected = 116;
-            Ride[] rides = { new Ride(0.1, 2), new Ride(0.1, 10), new Ride(5, 50) };
+            double expected = 206;
+            Ride[] rides = { new Ride(0.1, 2, RideType.PREMIUM), new Ride(0.1, 10, RideType.NORMAL), new Ride(5, 50, RideType.PREMIUM) };
             RideRepository rideRepoTestObj = new RideRepository();
             rideRepoTestObj.AddRide("user1", rides);
             InvoiceSummary result = rideRepoTestObj.GetInvoice("user1");
@@ -86,17 +86,15 @@ namespace CabInvoiceGeneratorNUnitTest
         {
             try
             {
-                double expected = 116;
                 Ride[] rides = null;
                 RideRepository rideRepoTestObj = new RideRepository();
                 rideRepoTestObj.AddRide("user1", rides);
                 InvoiceSummary result = rideRepoTestObj.GetInvoice("user1");
-                Assert.AreEqual(expected, result.totalFare);
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 Assert.AreEqual(e.Message, "Rides Are Null");
             }
         }
-        }
     }
+}

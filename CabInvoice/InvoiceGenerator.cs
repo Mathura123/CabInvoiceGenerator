@@ -6,9 +6,13 @@ namespace CabInvoice
 {
     public class InvoiceGenerator
     {
-        private static readonly int minimumFare = 5;
-        public static double CalculateFare(double distanceInKM, int timeInMin)
+        private static int CHARGE_PER_KM;
+        private static int CHARGE_PER_MIN;
+        private static int MINIMUM_FARE;
+
+        public static double CalculateFare(double distanceInKM, int timeInMin, RideType rideType)
         {
+            SetCharges(rideType);
             double calculatedFare = 0;
             if (distanceInKM <= 0)
             {
@@ -18,8 +22,8 @@ namespace CabInvoice
             {
                 throw new CabInvoiceException(CabInvoiceException.ExceptionType.INVALID_TIME, "Invalid Time");
             }
-            calculatedFare = (10 * distanceInKM) + timeInMin;
-            return Math.Max(calculatedFare, minimumFare);
+            calculatedFare = (CHARGE_PER_KM * distanceInKM) + (CHARGE_PER_MIN * timeInMin);
+            return Math.Max(calculatedFare, MINIMUM_FARE);
         }
         public static InvoiceSummary CalculateFare(Ride[] rides)
         {
@@ -30,9 +34,26 @@ namespace CabInvoice
             }
             foreach (Ride ride in rides)
             {
-                totalFare += CalculateFare(ride.distance,ride.time);
+                totalFare += CalculateFare(ride.distance, ride.time, ride.rideType);
             }
             return new InvoiceSummary(rides.Length, totalFare);
+        }
+        private static void SetCharges(RideType rideType)
+        {
+            if (rideType.Equals(RideType.NORMAL))
+            {
+                CHARGE_PER_KM = 10;
+                CHARGE_PER_MIN = 1;
+                MINIMUM_FARE = 5;
+            }
+            else if (rideType.Equals(RideType.PREMIUM))
+            {
+                CHARGE_PER_KM = 15;
+                CHARGE_PER_MIN = 2;
+                MINIMUM_FARE = 20;
+            }
+            else
+                throw new CabInvoiceException(CabInvoiceException.ExceptionType.INVALID_RIDE_TYPE, "Invalid Ride Type");
         }
     }
 }
