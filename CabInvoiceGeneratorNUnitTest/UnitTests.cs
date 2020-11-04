@@ -10,19 +10,17 @@ namespace CabInvoiceGeneratorNUnitTest
         public void GivenDistanceAndTime_ShouldReturn_TotalFare()
         {
             double expected = 25;
-            InvoiceGenerator invoiceGenetratorTestObj = new InvoiceGenerator();
-            double result = invoiceGenetratorTestObj.CalculateFare(2, 5);
-            Assert.AreEqual(expected,result);
+            double result = InvoiceGenerator.CalculateFare(2, 5);
+            Assert.AreEqual(expected, result);
         }
         [Test]
         public void GivenInvalidDistance_ShouldThrow_CabInvoiceException()
         {
             try
             {
-                InvoiceGenerator invoiceGenetratorTestObj = new InvoiceGenerator();
-                double result = invoiceGenetratorTestObj.CalculateFare(-2, 5);
+                double result = InvoiceGenerator.CalculateFare(-2, 5);
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 Assert.AreEqual(e.Message, "Invalid Distance");
             }
@@ -32,8 +30,7 @@ namespace CabInvoiceGeneratorNUnitTest
         {
             try
             {
-                InvoiceGenerator invoiceGenetratorTestObj = new InvoiceGenerator();
-                double result = invoiceGenetratorTestObj.CalculateFare(2, -5);
+                double result = InvoiceGenerator.CalculateFare(2, -5);
             }
             catch (Exception e)
             {
@@ -41,12 +38,11 @@ namespace CabInvoiceGeneratorNUnitTest
             }
         }
         [Test]
-        public void GivenMultipleRides_ShouldReturn_TotalFare()
+        public void GivenMultipleRides_ShouldReturn_InvoiceSummary()
         {
             double expected = 30.0;
             Ride[] ridesTestObj = { new Ride(2.0, 5), new Ride(0.1, 1) };
-            InvoiceGenerator invoiceGenetratorTestObj = new InvoiceGenerator();
-            InvoiceSummary result = invoiceGenetratorTestObj.CalculateFare(ridesTestObj);
+            InvoiceSummary result = InvoiceGenerator.CalculateFare(ridesTestObj);
             Assert.AreEqual(expected, result.totalFare);
         }
         [Test]
@@ -55,13 +51,35 @@ namespace CabInvoiceGeneratorNUnitTest
             try
             {
                 Ride[] ridesTestObj = null;
-                InvoiceGenerator invoiceGenetratorTestObj = new InvoiceGenerator();
-                InvoiceSummary result = invoiceGenetratorTestObj.CalculateFare(ridesTestObj);
+                InvoiceSummary result = InvoiceGenerator.CalculateFare(ridesTestObj);
             }
             catch (Exception e)
             {
                 Assert.AreEqual(e.Message, "Rides Are Null");
             }
+        }
+        [Test]
+        public void GivenUserId_ThatIsNotAdded_RideRepository_ShouldThrow_CabInvoiceException()
+        {
+            try
+            {
+                RideRepository rideRepoTestObj = new RideRepository();
+                InvoiceSummary result = rideRepoTestObj.GetInvoice("user1");
+            }
+            catch(Exception e)
+            {
+                Assert.AreEqual(e.Message, "Invalid UserID");
+            }
+        }
+        [Test]
+        public void GivenUserId_RideRepository_ShouldReturn_InvoiceSummary()
+        {
+            double expected = 116;
+            Ride[] rides = { new Ride(0.1, 2), new Ride(0.1, 10), new Ride(5, 50) };
+            RideRepository rideRepoTestObj = new RideRepository();
+            rideRepoTestObj.AddRide("user1", rides);
+            InvoiceSummary result = rideRepoTestObj.GetInvoice("user1");
+            Assert.AreEqual(expected, result.totalFare);
         }
     }
 }

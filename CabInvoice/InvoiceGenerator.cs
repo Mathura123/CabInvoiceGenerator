@@ -6,8 +6,8 @@ namespace CabInvoice
 {
     public class InvoiceGenerator
     {
-        private readonly int minimumFare = 5;
-        public double CalculateFare(double distanceInKM, int timeInMin)
+        private static readonly int minimumFare = 5;
+        public static double CalculateFare(double distanceInKM, int timeInMin)
         {
             double calculatedFare = 0;
             if (distanceInKM <= 0)
@@ -21,7 +21,7 @@ namespace CabInvoice
             calculatedFare = (10 * distanceInKM) + timeInMin;
             return Math.Max(calculatedFare, minimumFare);
         }
-        public InvoiceSummary CalculateFare(Ride[] rides)
+        public static InvoiceSummary CalculateFare(Ride[] rides)
         {
             double totalFare = 0;
             if (rides == null)
@@ -30,7 +30,7 @@ namespace CabInvoice
             }
             foreach (Ride ride in rides)
             {
-                totalFare += this.CalculateFare(ride.distance,ride.time);
+                totalFare += CalculateFare(ride.distance,ride.time);
             }
             return new InvoiceSummary(rides.Length, totalFare);
         }

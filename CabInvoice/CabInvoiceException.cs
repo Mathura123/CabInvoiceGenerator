@@ -11,6 +11,7 @@ namespace CabInvoice
             INVALID_DISTANCE,
             INVALID_TIME,
             NULL_RIDES,
+            INVALID_USER_ID
         }
         private ExceptionType type;
         public CabInvoiceException(ExceptionType type, string message) : base(message)
